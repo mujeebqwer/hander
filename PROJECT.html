@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Store</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f6e207;
+      color: rgb(105, 13, 13);
+      box-sizing: border-box;
+    }
+
+    /* Header (Sticky Navigation Bar) */
+    header {
+      position: sticky;
+      top: 0;
+      background-color: rgb(239, 237, 244);
+      color: rgb(255, 3, 3);
+      padding: 15px 20px;
+      box-shadow: 0 2px 10px rgba(5, 250, 254, 0.1);
+      z-index: 100;
+    }
+
+    header nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: rgb(14, 249, 112);
+      text-decoration: none;
+    }
+
+    .search-bar input {
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      width: 200px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: rgb(7, 135, 255);
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .product-card {
+      border: 1px solid rgb(13, 232, 137);
+      padding: 15px;
+      background-color: rgb(91, 14, 246);
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(227, 242, 14, 0.2);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .product-card h3 {
+      margin: 15px 0 10px;
+      font-size: 1.25rem;
+    }
+
+    .product-card p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: rgb(28, 13, 237);
+    }
+
+    .product-card button {
+      background-color: #4CAF50;
+      color: rgb(3, 119, 243);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .product-card button:hover {
+      background-color: #45a049;
+    }
+
+    /* Floating Add to Cart Button */
+    .add-to-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #12f3a1;
+      color: rgb(148, 24, 243);
+      padding: 15px 20px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      display: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+      background-color: #de0fbf;
+    }
+
+    /* Product Detail Page */
+    .product-detail-page {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: rgb(239, 17, 17);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-detail-page img {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    /* Checkout Page */
+    .checkout-page {
+      padding: 40px 20px;
+      text-align: center;
+      background-color: rgb(173, 229, 19);
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .checkout-page h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .checkout-page form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .checkout-page input {
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid rgb(232, 207, 13);
+    }
+
+    .checkout-page button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkout-page button:hover {
+      background-color: #45a049;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      header {
+        padding: 10px;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .add-to-cart {
+        right: 10px;
+        bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <nav>
+      <a href="#" class="logo">HANGERS</a>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Categories</a>
+        <div class="search-bar">
+          <input type="text" placeholder="Search...">
+        </div>
+        <a href="#">Cart (0)</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Product Grid Section -->
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcR12VnIHEjdO8uUQKJHXT94NAT8Eij2TdzTMpy8KktTXg3e_yTAKiSDPpI-mmFt4L-fe_nndX-q4j5-SXm0xGgSP7zg6qNmBtWivUZeKrLkJQxyZZX3IWke8w" alt="tshirt">
+      <h3>T shirt</h3>
+      <p>Easy to wear and Flexible</p>
+      <p>$19.99</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://assets.ajio.com/medias/sys_master/root/20240916/LlHK/66e85d3f1d763220faed2919/-473Wx593H-700431722-white-MODEL2.jpg" alt="womans wears">
+      <h3>womans wears</h3>
+      <p>womans comfort is our priority</p>
+      <p>$29.99</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/616xchp1ECL._SY741_.jpg" alt="jeans">
+      <h3>Geans</h3>
+      <p>Available in all size</p>
+      <p>$39.99</p>
+      <button>Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Add to Cart Button (Floating) -->
+  <div class="add-to-cart">+</div>
+
+  <!-- Product Detail Page (Example) -->
+  <div class="product-detail-page">
+    <img src="https://lh3.googleusercontent.com/KqQDMooNHD1GsKvJvVqJkDzj1baKFMny7Ov848lXW3GzdSLSEhbOFuHjCg0DIYtVNb9ysHrKSaxWDC7Aj7ZlZRu7lqjxiq12KYYZluo=w1000" alt="Product Detail">
+    <h1>Breclate</h1>
+    <p>funky and easy to wear</p>
+    <p>$9.99</p>
+    <button>Add to Cart</button>
+  </div>
+
+  <!-- Checkout Page -->
+  <div class="checkout-page">
+    <h2>Checkout</h2>
+    <form>
+      <input type="text" placeholder="Name">
+      <input type="email" placeholder="Email">
+      <input type="text" placeholder="Address">
+      <button type="submit">Proceed to Payment</button>
+    </form>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+    <div>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+</body>
+</html>
